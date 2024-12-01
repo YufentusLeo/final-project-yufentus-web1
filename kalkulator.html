@@ -1,0 +1,121 @@
+<!DOCTYPE html>  
+<html lang="id">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>  
+    <title>Kalkulator - Website Portofolio</title>  
+</head>  
+<body class="bg-gray-50">  
+    <header class="bg-white shadow-md">  
+        <nav class="max-w-6xl mx-auto px-4">  
+            <div class="flex justify-between items-center h-16">  
+                <a href="index.html" class="text-xl font-bold text-blue-600">MyPortfolio</a>  
+                <div class="flex space-x-4">  
+                    <a href="index.html" class="nav-link">Homepage</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="kalkulator.html" class="nav-link">Calculator</a>
+                    <a href="register.html" class="nav-link">Register</a> 
+                </div>  
+            </div>  
+        </nav>  
+    </header>  
+
+    <main class="page-container">  
+        <div class="max-w-md mx-auto mt-10">  
+            <div class="bg-white rounded-lg shadow-lg p-6">  
+                <div class="mb-4">  
+                    <input type="text" id="display"   
+                           class="w-full text-right text-2xl p-4 bg-gray-100 rounded-lg"   
+                           readonly value="0">  
+                </div>  
+                
+                <div class="grid grid-cols-4 gap-2">  
+                    <!-- Row 1 -->  
+                    <button class="calc-btn bg-gray-200 p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="clearDisplay()">C</button>  
+                    <button class="calc-btn bg-gray-200 p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendOperator('(')"></button>  
+                    <button class="calc-btn bg-gray-200 p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendOperator(')')"></button>  
+                    <button class="calc-btn bg-blue-500 text-white p-4 text-xl rounded-lg" onclick="appendOperator('/')">/</button>  
+                    
+                    <!-- Row 2 -->  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('7')">7</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('8')">8</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('9')">9</button>  
+                    <button class="calc-btn bg-blue-500 text-white p-4 text-xl rounded-lg" onclick="appendOperator('*')">×</button>  
+                    
+                    <!-- Row 3 -->  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('4')">4</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('5')">5</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('6')">6</button>  
+                    <button class="calc-btn bg-blue-500 text-white p-4 text-xl rounded-lg" onclick="appendOperator('-')">-</button>  
+                    
+                    <!-- Row 4 -->  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('1')">1</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('2')">2</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('3')">3</button>  
+                    <button class="calc-btn bg-blue-500 text-white p-4 text-xl rounded-lg" onclick="appendOperator('+')">+</button>  
+                    
+                    <!-- Row 5 -->  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('0')">0</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="appendNumber('.')">.</button>  
+                    <button class="calc-btn bg-white p-4 text-xl rounded-lg border border-gray-200 hover:bg-opacity-80 transition-colors" onclick="backspace()">⌫</button>  
+                    <button class="calc-btn bg-blue-600 text-white p-4 text-xl rounded-lg" onclick="calculate()">=</button>  
+                </div>  
+            </div>  
+        </div>  
+    </main>  
+
+    <script>  
+        let display = document.getElementById('display');  
+        let currentExpression = '0';  
+
+        function updateDisplay() {  
+            display.value = currentExpression;  
+        }  
+
+        function appendNumber(num) {  
+            if (currentExpression === '0') {  
+                currentExpression = num;  
+            } else {  
+                currentExpression += num;  
+            }  
+            updateDisplay();  
+        }  
+
+        function appendOperator(op) {  
+            if (currentExpression === '0' && op !== '-') {  
+                return;  
+            }  
+            currentExpression += op;  
+            updateDisplay();  
+        }  
+
+        function clearDisplay() {  
+            currentExpression = '0';  
+            updateDisplay();  
+        }  
+
+        function backspace() {  
+            if (currentExpression.length === 1) {  
+                currentExpression = '0';  
+            } else {  
+                currentExpression = currentExpression.slice(0, -1);  
+            }  
+            updateDisplay();  
+        }  
+
+        function calculate() {  
+            try {  
+                currentExpression = eval(currentExpression).toString();  
+                updateDisplay();  
+            } catch (error) {  
+                currentExpression = 'Error';  
+                updateDisplay();  
+                setTimeout(clearDisplay, 1000);  
+            }  
+        }  
+    </script>  
+</body>  
+</html>

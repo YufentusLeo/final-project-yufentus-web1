@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Register</title>
+</head>
+<body class="bg-gray-50"> 
+    <header class="bg-white shadow-md">  
+        <nav class="max-w-6xl mx-auto px-4">  
+            <div class="flex justify-between items-center h-16">  
+                <a href="index.html" class="text-xl font-bold text-blue-600">MyPortfolio</a>  
+                <div class="flex space-x-4">  
+                    <a href="index.html" class="nav-link">Homepage</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="kalkulator.html" class="nav-link">Calculator</a>
+                    <a href="register.html" class="nav-link">Register</a> 
+                </div>  
+            </div>  
+        </nav>  
+    </header>  
+    
+    <main class="page-container">
+        <div class="max-w-md mx-auto">
+            <h1 class="section-title text-center">Registration Form</h1>
+            
+            <form id="registrationForm" class="bg-white rounded-lg shadow-lg p-6">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+                    <input type="text" id="name" name="name" 
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                           maxlength="40" required>
+                    <p id="nameError" class="text-red-500 text-sm mt-1 hidden"></p>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" 
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                           maxlength="15" required>
+                    <p id="phoneError" class="text-red-500 text-sm mt-1 hidden"></p>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                    <input type="email" id="email" name="email" 
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                           required>
+                    <p id="emailError" class="text-red-500 text-sm mt-1 hidden"></p>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+                    <input type="password" id="password" name="password" 
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                           minlength="8" maxlength="16" required>
+                    <p id="passwordError" class="text-red-500 text-sm mt-1 hidden"></p>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    Daftar
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+        }
+        
+        function hideError(elementId) {
+            document.getElementById(elementId).classList.add('hidden');
+        }
+        
+        function validateName(name) {
+            return name.length > 0 && name.length <= 40;
+        }
+        
+        function validatePhone(phone) {
+            return /^\d{1,15}$/.test(phone);
+        }
+        
+        function validateEmail(email) {
+            return /^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/.test(email);
+        }
+        
+        function validatePassword(password) {
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8,16}$/.test(password);
+        }
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Validate name
+            const name = document.getElementById('name').value;
+            if (!validateName(name)) {
+                showError('nameError', 'Nama harus antara 1-40 karakter.');
+                isValid = false;
+            } else {
+                hideError('nameError');
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value;
+            if (!validatePhone(phone)) {
+                showError('phoneError', 'Nomor telepon harus berisi 1-15 digit angka.');
+                isValid = false;
+            } else {
+                hideError('phoneError');
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value;
+            if (!validateEmail(email)) {
+                showError('emailError', 'Format email tidak valid.');
+                isValid = false;
+            } else {
+                hideError('emailError');
+            }
+            
+            // Validate password
+            const password = document.getElementById('password').value;
+            if (!validatePassword(password)) {
+                showError('passwordError', 'Kata sandi harus 8-16 karakter, minimal 1 huruf besar, 1 huruf kecil, dan 1 angka.');
+                isValid = false;
+            } else {
+                hideError('passwordError');
+            }
+            
+            if (isValid) {
+                alert('Pendaftaran Berhasil');
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
